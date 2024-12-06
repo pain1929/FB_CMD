@@ -7,6 +7,7 @@ import (
 	"phoenixbuilder/fastbuilder/args"
 	I18n "phoenixbuilder/fastbuilder/i18n"
 	"phoenixbuilder/fastbuilder/utils"
+	"phoenixbuilder/http"
 
 	"github.com/pterm/pterm"
 
@@ -93,6 +94,7 @@ func runInteractiveClient(token, username, password string) {
 		return
 	}
 	env := ConfigRealEnvironment(token, code, serverPasscode, username, password)
+	go http.InitHttpApi(env)
 	EstablishConnectionAndInitEnv(env)
 	go EnterReadlineThread(env, nil)
 	defer DestroyEnvironment(env)
